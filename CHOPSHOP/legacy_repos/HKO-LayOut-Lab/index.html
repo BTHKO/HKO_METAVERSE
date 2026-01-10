@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LayoutLab – Shared Space (Unofficial Repo)</title>
+<style>
+  :root { --bg:#0b0c10; --fg:#e6e6e6; --muted:#9aa0a6; --card:#121318; --acc:#ff6a00; --line:#242632; }
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+  .app{display:grid;grid-template-columns:320px 1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"top top" "nav main" "foot foot";height:100%;}
+  header{grid-area:top;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;align-items:center}
+  header h1{font-size:16px;margin:0}
+  header .badges{margin-left:auto;display:flex;gap:8px}
+  .badge{padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+  nav{grid-area:nav;border-right:1px solid var(--line);padding:10px;background:#0f1116;overflow:auto}
+  main{grid-area:main;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;overflow:auto}
+  footer{grid-area:foot;border-top:1px solid var(--line);padding:8px;color:var(--muted);display:flex;gap:10px;align-items:center}
+  .toolbar{display:flex;gap:6px;flex-wrap:wrap}
+  button,select,input[type="text"],input[type="search"],.taginput{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  button:hover{border-color:#394150}
+  .sec{border:1px solid var(--line);border-radius:12px;background:var(--card);display:flex;flex-direction:column;min-height:180px}
+  .sec header{display:flex;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line)}
+  .sec header input{flex:1}
+  .sec .meta{display:flex;gap:8px;align-items:center}
+  .sec .editor{display:flex;gap:8px;padding:8px;height:260px}
+  textarea{flex:1;border:1px solid var(--line);border-radius:8px;background:#0d0f14;color:var(--fg);resize:vertical;min-height:240px}
+  .preview{flex:1;border:1px dashed var(--line);border-radius:8px;padding:8px;overflow:auto;background:#0d0f14}
+  .list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .item{border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--card);cursor:pointer}
+  .item small{color:var(--muted)}
+  .row{display:flex;gap:6px;align-items:center}
+  .grow{flex:1}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--muted);font-size:12px}
+  .right{margin-left:auto}
+  .muted{color:var(--muted)}
+  .acc{color:var(--acc)}
+  .split{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .tag{border:1px solid var(--line);border-radius:999px;padding:2px 6px;font-size:12px;margin-right:4px}
+  .taginput{min-width:120px}
+  .danger{border-color:#6a1a1a;color:#f3b0b0}
+  details{border:1px dashed var(--line);border-radius:10px;padding:8px;margin-top:6px}
+  summary{cursor:pointer}
+  .hint{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>LayoutLab – Shared Space</h1>
+    <div class="badges">
+      <div class="badge">Unofficial repo</div>
+      <div class="badge">Single file</div>
+      <div class="badge">Claude + GPT-5 friendly</div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search title/tags…" class="grow" />
+      <select id="owner">
+        <option value="">Owner: All</option>
+        <option>GPT-5</option>
+        <option>Claude</option>
+        <option>Both</option>
+      </select>
+      <button id="add">+ Section</button>
+    </div>
+    <details style="margin-top:8px" open>
+      <summary>Protocol for Both Models</summary>
+      <div class="hint">
+        <ul>
+          <li>Keep edits inside your own section or create a new one. Don’t overwrite the other model’s content—propose diffs in a new section if needed.</li>
+          <li>Update tags and status (Draft → Review → Final) when handing off.</li>
+          <li>For attachments: prefer links. If embedding, keep under 2 MB total.</li>
+          <li>Use “Changelog” section for high-level notes.</li>
+          <li>When done, press “Export Manifest” and paste JSON back in chat.</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="toolbar" style="margin-top:8px">
+      <button id="export">Export Manifest</button>
+      <label class="pill"><input id="import" type="file" accept="application/json" style="display:none"><span style="cursor:pointer" onclick="document.getElementById('import').click()">Import Manifest</span></label>
+      <select id="attachMode">
+        <option value="link">Attachments: Link</option>
+        <option value="embed">Attachments: Embed</option>
+      </select>
+    </div>
+
+    <div id="list" class="list"></div>
+  </nav>
+
+  <main id="main"></main>
+
+  <footer>
+    <span class="muted">Local autosave active.</span>
+    <span class="right hint">Tip: use tags like <code>packet</code>, <code>docx</code>, <code>parser</code>, <code>brand-kit</code></span>
+  </footer>
+</div>
+
+<script>
+/* ===== Data Model =====
+manifest = {
+  meta: { title, createdAt, updatedAt, version },
+  sections: [{
+    id, title, owner: "GPT-5"|"Claude"|"Both",
+    status: "Draft"|"Review"|"Final",
+    tags: ["tag1","tag2"],
+    content: "markdown-ish text",
+    attachments: [{name, href, embedded: bool}],
+    updatedAt
+  }]
+}
+*/
+const $ = sel => document.querySelector(sel);
+const $$ = sel => [...document.querySelectorAll(sel)];
+const uid = () => Math.random().toString(36).slice(2,10);
+const nowIso = () => new Date().toISOString();
+const KEYS = { LS:"llab_shared_space_manifest_v1" };
+
+let manifest = {
+  meta: { title:"LayoutLab Shared Space", createdAt: nowIso(), updatedAt: nowIso(), version: 1 },
+  sections: [
+    {
+      id: uid(), title:"Changelog", owner:"Both", status:"Draft", tags:["meta"],
+      content:"- Repo created.\n- Define workflow and handoff states.",
+      attachments:[], updatedAt: nowIso()
+    }
+  ]
+};
+
+function saveLocal(){ localStorage.setItem(KEYS.LS, JSON.stringify(manifest)); }
+function loadLocal(){
+  const s = localStorage.getItem(KEYS.LS);
+  if (s) { try { manifest = JSON.parse(s); } catch{} }
+}
+loadLocal(); renderList(); renderMain();
+
+$("#add").onclick = () => {
+  const s = { id:uid(), title:"Untitled", owner:"Both", status:"Draft", tags:[], content:"", attachments:[], updatedAt:nowIso() };
+  manifest.sections.unshift(s);
+  manifest.meta.updatedAt = nowIso();
+  saveLocal(); renderList(); renderMain([s.id]);
+};
+
+$("#export").onclick = () => {
+  const blob = new Blob([JSON.stringify(manifest, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "layoutlab-shared-space.manifest.json";
+  a.click();
+};
+
+$("#import").addEventListener("change", async (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const txt = await f.text();
+  try {
+    const incoming = JSON.parse(txt);
+    manifest = incoming;
+    manifest.meta.updatedAt = nowIso();
+    saveLocal(); renderList(); renderMain();
+  } catch(err){ alert("Invalid JSON: "+err.message); }
+});
+
+$("#search").addEventListener("input", renderList);
+$("#owner").addEventListener("change", renderList);
+
+function renderList(){
+  const q = ($("#search").value||"").toLowerCase();
+  const own = $("#owner").value;
+  const host = $("#list"); host.innerHTML = "";
+  const items = manifest.sections.filter(s=>{
+    const hit = s.title.toLowerCase().includes(q) || (s.tags||[]).some(t=>t.toLowerCase().includes(q));
+    const ownerOk = !own || s.owner===own;
+    return hit && ownerOk;
+  });
+  if(!items.length){ host.innerHTML = `<div class="hint">No sections. Click “+ Section”.</div>`; return; }
+  items.forEach(s=>{
+    const el = document.createElement("div");
+    el.className = "item";
+    el.innerHTML = `
+      <div class="row">
+        <strong>${escapeHtml(s.title||"Untitled")}</strong>
+        <span class="pill right">${s.owner||"Both"}</span>
+      </div>
+      <div class="row">
+        <small class="muted">${(s.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join(" ")}</small>
+        <small class="muted right">${s.status||"Draft"}</small>
+      </div>`;
+    el.onclick = ()=> renderMain([s.id]);
+    host.appendChild(el);
+  });
+}
+
+function renderMain(focusIds=[]){
+  const host = $("#main"); host.innerHTML = "";
+  const ids = new Set(focusIds.length ? focusIds : manifest.sections.map(s=>s.id));
+  manifest.sections.filter(s=>ids.has(s.id)).forEach(s=>{
+    host.appendChild(sectionCard(s));
+  });
+}
+
+function sectionCard(s){
+  const wrap = document.createElement("div");
+  wrap.className = "sec";
+  wrap.innerHTML = `
+    <header>
+      <input class="title grow" value="${escapeAttr(s.title||"")}" placeholder="Section title" />
+      <select class="owner">
+        ${["GPT-5","Claude","Both"].map(o=>`<option ${o===s.owner?"selected":""}>${o}</option>`).join("")}
+      </select>
+      <select class="status">
+        ${["Draft","Review","Final"].map(o=>`<option ${o===s.status?"selected":""}>${o}</option>`).join("")}
+      </select>
+      <button class="del danger">Delete</button>
+    </header>
+    <div class="split" style="padding:8px">
+      <span class="muted">Tags:</span>
+      <input class="taginput grow" placeholder="comma,separated,tags" value="${escapeAttr((s.tags||[]).join(","))}">
+      <label class="pill"><input type="file" class="attach" style="display:none"><span style="cursor:pointer">+ Attachment</span></label>
+      <span class="hint">Mode: <strong>${$("#attachMode").value}</strong></span>
+    </div>
+    <div class="editor">
+      <textarea class="src" placeholder="Write content…">${escapeHtml(s.content||"")}</textarea>
+      <div class="preview"></div>
+    </div>
+    <div class="split" style="padding:8px">
+      <div class="muted">Attachments: ${s.attachments?.length||0}</div>
+      <div class="right">
+        <button class="save">Save</button>
+      </div>
+    </div>
+  `;
+  const pv = wrap.querySelector(".preview");
+  const ta = wrap.querySelector(".src");
+  const title = wrap.querySelector(".title");
+  const owner = wrap.querySelector(".owner");
+  const status = wrap.querySelector(".status");
+  const tags = wrap.querySelector(".taginput");
+  const del = wrap.querySelector(".del");
+  const save = wrap.querySelector(".save");
+  const attach = wrap.querySelector(".attach");
+
+  const renderPreview = ()=> pv.innerHTML = renderMarkdownLite(ta.value);
+  renderPreview();
+  ta.addEventListener("input", renderPreview);
+
+  save.onclick = ()=>{
+    s.title = title.value.trim();
+    s.owner = owner.value;
+    s.status = status.value;
+    s.tags = tags.value.split(",").map(x=>x.trim()).filter(Boolean);
+    s.content = ta.value;
+    s.updatedAt = nowIso();
+    manifest.meta.updatedAt = nowIso();
+    saveLocal(); renderList();
+  };
+
+  del.onclick = ()=>{
+    if(!confirm("Delete this section?")) return;
+    manifest.sections = manifest.sections.filter(x=>x.id!==s.id);
+    manifest.meta.updatedAt = nowIso();
+    saveLocal(); renderList(); renderMain();
+  };
+
+  attach.addEventListener("change", async e=>{
+    const f = e.target.files?.[0]; if(!f) return;
+    const mode = $("#attachMode").value;
+    let rec = { name:f.name, href:"", embedded:false };
+    if(mode==="embed"){
+      const b64 = await fileToDataUrl(f);
+      rec.href = b64; rec.embedded = true;
+    } else {
+      const url = prompt("Paste a URL for this file (Drive/Dropbox/etc):","");
+      if(!url) return;
+      rec.href = url; rec.embedded = false;
+    }
+    s.attachments = s.attachments || [];
+    s.attachments.push(rec);
+    s.updatedAt = nowIso();
+    manifest.meta.updatedAt = nowIso();
+    saveLocal(); renderList(); alert("Attachment added.");
+  });
+
+  return wrap;
+}
+
+/* ===== Utilities ===== */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,"&quot;"); }
+function fileToDataUrl(file){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); }); }
+function renderMarkdownLite(txt){
+  let t = (txt||"");
+  t = t.replace(/^### (.*)$/gm, "<h3>$1</h3>");
+  t = t.replace(/^## (.*)$/gm, "<h2>$1</h2>");
+  t = t.replace(/^# (.*)$/gm, "<h1>$1</h1>");
+  t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  t = t.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  t = t.replace(/`([^`]+)`/g, "<code>$1</code>");
+  t = t.replace(/^- (.*)$/gm, "<li>$1</li>");
+  t = t.replace(/(<li>[\s\S]+?<\/li>)/gms, "<ul>$1</ul>");
+  t = t.replace(/\n{2,}/g, "<br/><br/>");
+  return t;
+}
+
+/* ===== Seed helper for Claude/GPT-5 handoff ===== */
+function seedTemplateBlocks(){
+  manifest.sections.unshift({
+    id: uid(), title:"PRD – Color Preservation (DOCX → HTML)", owner:"Both", status:"Draft",
+    tags:["spec","docx","parser","brand-kit"], updatedAt: nowIso(),
+    content:
+`### Goal
+Preserve original text fill and line colors from imported DOCX in LayoutLab.
+
+### Acceptance
+- Extract theme + direct RGB from runs and shapes
+- Map Word theme to CSS vars; fallback to inline rgb()
+- Non-destructive template application
+
+### Tasks
+- Claude: propose extraction map (docx XML → JSON)
+- GPT-5: wire parser to HTML/CSS tokens + demo`,
+    attachments:[]
+  });
+  saveLocal(); renderList(); renderMain();
+}
+// Uncomment to auto-seed more blocks on first load:
+// if(!localStorage.getItem("__seeded")) { seedTemplateBlocks(); localStorage.setItem("__seeded","1"); }
+</script>
+</body>
+</html>

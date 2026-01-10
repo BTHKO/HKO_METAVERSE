@@ -1,0 +1,45 @@
+function commitToGitHub(filePath, content, message){
+  const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
+  if (!token) throw new Error('Missing GITHUB_TOKEN');
+  const owner='BTHKO', repo='HKO-LayOut-Lab', branch='main';
+  if (filePath.startsWith('/')) filePath = filePath.slice(1); // <-- avoid 404
+
+  const api = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+  const headers = {
+    'Authorization':'Bearer '+token,
+    'Accept':'application/vnd.github+json',
+    'User-Agent':'AppsScript'
+  };
+
+  // Get current SHA (200 = exists, 404 = new file)
+  let sha = null;
+  const getRes = UrlFetchApp.fetch(`${api}?ref=${branch}`, {method:'get', headers, muteHttpExceptions:true});
+  if (getRes.getResponseCode() === 200) {
+    sha = JSON.parse(getRes.getContentText()).sha;
+  } else if (getRes.getResponseCode() !== 404) {
+    throw new Error('GET '+getRes.getResponseCode()+': '+getRes.getContentText());
+  }
+
+  const payload = {
+    message,
+    content: Utilities.base64Encode(content),
+    branch,
+    ...(sha ? { sha } : {})
+  };
+
+  const putRes = UrlFetchApp.fetch(api, {
+    method:'put', contentType:'application/json', headers, muteHttpExceptions:true,
+    payload: JSON.stringify(payload)
+  });
+  const code = putRes.getResponseCode();
+  if (code >= 300) throw new Error('PUT '+code+': '+putRes.getContentText());
+  Logger.log('Committed: '+putRes.getContentText());
+}
+
+// Example: bump version in manifest and commit
+function updateManifest(){
+  const live = UrlFetchApp.fetch('https://bthko.github.io/HKO-LayOut-Lab/manifest.json').getContentText();
+  const json = JSON.parse(live);
+  json.meta.version = (json.meta.version||1)+1;
+  commitToGitHub('manifest.json', JSON.stringify(json, null, 2), 'Bump manifest.version');
+}

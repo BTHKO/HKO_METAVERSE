@@ -1,0 +1,30 @@
+name: Notify Claude
+on: [push, workflow_dispatch]
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build message
+        id: msg
+        run: |
+          COMMIT_MSG="$(git log -1 --pretty=%B)"
+          FILES="$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | head -n 50)"
+          echo "text=Repo: $GITHUB_REPOSITORY
+Branch: ${GITHUB_REF##*/}
+Actor: $GITHUB_ACTOR
+Commit: $GITHUB_SHA
+Message: $COMMIT_MSG
+Files:
+$FILES" >> $GITHUB_OUTPUT
+      - name: Send to Claude
+        run: |
+          BODY=$(jq -n --arg m "${{ steps.msg.outputs.text }}" '
+            {model:"claude-3-5-sonnet-20240620", max_tokens:400,
+             messages:[{role:"user", content:$m}],
+             system:"Summarize changes and, if manifest.json changed, propose a JSON PATCH with add/update/remove arrays using the schema provided earlier."}')
+          curl -sS https://api.anthropic.com/v1/messages \
+            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "content-type: application/json" \
+            -d "$BODY"
