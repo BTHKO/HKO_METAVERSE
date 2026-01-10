@@ -1,0 +1,13 @@
+{
+  "name": "hko-hub",
+  "version": "2.0.0",
+  "description": "HKO_HUB Crystalline Framework",
+  "main": "HKO_HUB.js",
+  "scripts": {
+    "test": "node tests/test_atoms.js && node tests/test_molecules.js",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^27.0.0"
+  }
+}

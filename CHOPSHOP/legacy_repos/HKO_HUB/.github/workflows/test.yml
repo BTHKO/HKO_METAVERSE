@@ -1,0 +1,14 @@
+name: HKO_HUB Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run Atom Tests
+        run: node tests/test_atoms.js
+      - name: Run Molecule Tests
+        run: node tests/test_molecules.js
