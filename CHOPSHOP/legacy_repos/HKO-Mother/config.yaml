@@ -1,0 +1,25 @@
+# --- HKO Sandbox Configuration ---
+
+# 1. System Settings
+processor_model: "mistralai/mistral-7b-instruct"
+offline_mode: false  # Set to true to skip OpenRouter API calls
+log_level: "INFO"
+
+# 2. Google Drive Settings
+# ID of the folder to pull files from
+source_drive_folder_id: "1GfNUjtFFzWZA5wbvulT2fX_u7nYJ0sAY" 
+
+# 3. File Processing
+output_directory: "docs/outputs"
+manifest_file: "docs/manifest.json"
+
+# 4. Validation & Scoring
+validation:
+  min_length: 100
+  max_length: 50000
+  required_sections: ["Overview", "Core"]
+
+scoring:
+  clarity_weight: 0.4
+  completeness_weight: 0.3
+  actionability_weight: 0.3

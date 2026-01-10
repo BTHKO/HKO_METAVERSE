@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKO Metaverse - Project Management System</title>
+    <style>
+:root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  /* RGB versions for opacity control */
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  /* Background color tokens (Light Mode) */
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+
+  /* Semantic Color Tokens (Light Mode) */
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --status-bg-opacity: 0.15;
+  --status-border-opacity: 0.25;
+
+  --color-success-rgb: 33, 128, 141;
+  --color-error-rgb: 192, 21, 47;
+  --color-warning-rgb: 168, 75, 47;
+  --color-info-rgb: 98, 108, 113;
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --letter-spacing-tight: -0.01em;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+    --color-success-rgb: var(--color-teal-300-rgb);
+    --color-error-rgb: var(--color-red-400-rgb);
+    --color-warning-rgb: var(--color-orange-400-rgb);
+    --color-info-rgb: var(--color-gray-300-rgb);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.sidebar-header {
+  margin-bottom: var(--space-24);
+}
+
+.sidebar-header h1 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.sidebar-header p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-4);
+}
+
+.nav-item {
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  background-color: transparent;
+}
+
+.nav-item:hover {
+  background-color: var(--color-secondary);
+}
+
+.nav-item.active {
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--space-32);
+  overflow-y: auto;
+}
+
+.page-header {
+  margin-bottom: var(--space-32);
+}
+
+.page-header h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-8);
+}
+
+.page-header p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-16);
+  margin-bottom: var(--space-32);
+}
+
+.stat-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card h3 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card .value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.actions-section {
+  margin-bottom: var(--space-32);
+}
+
+.actions-section h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-16);
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+
+.btn {
+  padding: var(--space-10) var(--space-20);
+  border-radius: var(--radius-base);
+  border: none;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn:active {
+  background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.btn-small {
+  padding: var(--space-6) var(--space-12);
+  font-size: var(--font-size-sm);
+}
+
+.btn-danger {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+.data-table {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: var(--color-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+thead th {
+  text-align: left;
+  padding: var(--space-12) var(--space-16);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-card-border-inner);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+tbody tr:hover {
+  background-color: var(--color-bg-1);
+}
+
+tbody td {
+  padding: var(--space-12) var(--space-16);
+  font-size: var(--font-size-base);
+}
+
+.form-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  margin-bottom: var(--space-24);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-16);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.form-group label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: var(--space-10) var(--space-12);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-24);
+}
+
+.modal-header h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-3xl);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-base);
+}
+
+.modal-close:hover {
+  background-color: var(--color-secondary);
+}
+
+.progress-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  margin-bottom: var(--space-16);
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: var(--space-12);
+}
+
+.progress-info h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-4);
+}
+
+.progress-meta {
+  display: flex;
+  gap: var(--space-12);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.progress-actions {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.progress-bar-container {
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-full);
+  height: 24px;
+  overflow: hidden;
+  margin-bottom: var(--space-8);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-standard);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-btn-primary-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.active {
+  background-color: rgba(var(--color-success-rgb), 0.15);
+  color: var(--color-success);
+  border: 1px solid rgba(var(--color-success-rgb), 0.25);
+}
+
+.status-badge.paused {
+  background-color: rgba(var(--color-warning-rgb), 0.15);
+  color: var(--color-warning);
+  border: 1px solid rgba(var(--color-warning-rgb), 0.25);
+}
+
+.status-badge.completed {
+  background-color: rgba(var(--color-info-rgb), 0.15);
+  color: var(--color-info);
+  border: 1px solid rgba(var(--color-info-rgb), 0.25);
+}
+
+.status-badge.on-hold {
+  background-color: rgba(var(--color-error-rgb), 0.15);
+  color: var(--color-error);
+  border: 1px solid rgba(var(--color-error-rgb), 0.25);
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.priority-badge.high {
+  background-color: rgba(var(--color-error-rgb), 0.15);
+  color: var(--color-error);
+  border: 1px solid rgba(var(--color-error-rgb), 0.25);
+}
+
+.priority-badge.medium {
+  background-color: rgba(var(--color-warning-rgb), 0.15);
+  color: var(--color-warning);
+  border: 1px solid rgba(var(--color-warning-rgb), 0.25);
+}
+
+.priority-badge.low {
+  background-color: rgba(var(--color-info-rgb), 0.15);
+  color: var(--color-info);
+  border: 1px solid rgba(var(--color-info-rgb), 0.25);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-32);
+  color: var(--color-text-secondary);
+}
+
+.empty-state h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-8);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.code-preview {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  padding: var(--space-16);
+  margin-top: var(--space-12);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.alert {
+  padding: var(--space-16);
+  border-radius: var(--radius-base);
+  margin-bottom: var(--space-16);
+  border: 1px solid;
+}
+
+.alert-success {
+  background-color: rgba(var(--color-success-rgb), 0.1);
+  border-color: rgba(var(--color-success-rgb), 0.3);
+  color: var(--color-success);
+}
+
+.alert-error {
+  background-color: rgba(var(--color-error-rgb), 0.1);
+  border-color: rgba(var(--color-error-rgb), 0.3);
+  color: var(--color-error);
+}
+
+.settings-section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  margin-bottom: var(--space-24);
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-section h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-16);
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-12) 0;
+  border-bottom: 1px solid var(--color-card-border-inner);
+}
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+.settings-label {
+  font-weight: var(--font-weight-medium);
+}
+
+.settings-value {
+  color: var(--color-text-secondary);
+}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>HKO Metaverse</h1>
+                <p>Project Management System</p>
+            </div>
+            <nav>
+                <div class="nav-item active" data-page="dashboard">Dashboard</div>
+                <div class="nav-item" data-page="files">File Tracker</div>
+                <div class="nav-item" data-page="code">Code Repository</div>
+                <div class="nav-item" data-page="duplicates">Duplicates</div>
+                <div class="nav-item" data-page="architecture">Architecture Map</div>
+                <div class="nav-item" data-page="progress">Progress Tracker</div>
+                <div class="nav-item" data-page="settings">Settings</div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page">
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                    <p>Overview of your HKO Metaverse system</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Files</h3>
+                        <div class="value" id="stat-files">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Code Snippets</h3>
+                        <div class="value" id="stat-code">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Duplicates</h3>
+                        <div class="value" id="stat-duplicates">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Architecture</h3>
+                        <div class="value" id="stat-architecture">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Projects</h3>
+                        <div class="value" id="stat-projects">0</div>
+                    </div>
+                </div>
+
+                <div class="actions-section">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="app.showAddFileModal()">Add File</button>
+                        <button class="btn" onclick="app.showBulkImportModal()">Bulk Import</button>
+                        <button class="btn" onclick="app.showAddCodeModal()">Add Code</button>
+                        <button class="btn" onclick="app.showAddProjectModal()">New Project</button>
+                    </div>
+                </div>
+
+                <div class="actions-section">
+                    <h3>Active Projects</h3>
+                    <div id="dashboard-projects"></div>
+                </div>
+            </div>
+
+            <!-- File Tracker Page -->
+            <div id="files-page" class="page hidden">
+                <div class="page-header">
+                    <h2>File Tracker</h2>
+                    <p>Manage files across all project folders</p>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 24px;">
+                    <button class="btn" onclick="app.showAddFileModal()">Add File</button>
+                    <button class="btn" onclick="app.showBulkImportModal()">Bulk Import</button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Folder</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Date Added</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="files-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Repository Page -->
+            <div id="code-page" class="page hidden">
+                <div class="page-header">
+                    <h2>Code Repository</h2>
+                    <p>Store and organize code snippets by language and category</p>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 24px;">
+                    <button class="btn" onclick="app.showAddCodeModal()">Add Snippet</button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Language</th>
+                                    <th>DNA Category</th>
+                                    <th>Module</th>
+                                    <th>Production Ready</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="code-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicates Page -->
+            <div id="duplicates-page" class="page hidden">
+                <div class="page-header">
+                    <h2>Duplicate Tracker</h2>
+                    <p>Manage and resolve duplicate files</p>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 24px;">
+                    <button class="btn" onclick="app.showAddDuplicateModal()">Add Duplicate</button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>File 1</th>
+                                    <th>File 2</th>
+                                    <th>Size</th>
+                                    <th>Priority</th>
+                                    <th>Resolution Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="duplicates-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Page -->
+            <div id="architecture-page" class="page hidden">
+                <div class="page-header">
+                    <h2>Architecture Map</h2>
+                    <p>Document the 6-layer system architecture</p>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 24px;">
+                    <button class="btn" onclick="app.showAddArchitectureModal()">Add Component</button>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Layer</th>
+                                    <th>Component</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="architecture-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracker Page -->
+            <div id="progress-page" class="page hidden">
+                <div class="page-header">
+                    <h2>Progress Tracker</h2>
+                    <p>Track project completion with visual progress indicators</p>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 24px;">
+                    <button class="btn" onclick="app.showAddProjectModal()">Create New Project</button>
+                </div>
+
+                <div id="progress-list"></div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page hidden">
+                <div class="page-header">
+                    <h2>Settings</h2>
+                    <p>Manage your HKO Metaverse system</p>
+                </div>
+
+                <div class="settings-section">
+                    <h3>System Information</h3>
+                    <div class="settings-row">
+                        <span class="settings-label">Total Files Tracked</span>
+                        <span class="settings-value" id="settings-files">0</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Code Snippets Stored</span>
+                        <span class="settings-value" id="settings-code">0</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Duplicates Logged</span>
+                        <span class="settings-value" id="settings-duplicates">0</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Architecture Components</span>
+                        <span class="settings-value" id="settings-architecture">0</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Projects Tracked</span>
+                        <span class="settings-value" id="settings-projects">0</span>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Data Management</h3>
+                    <div class="action-buttons">
+                        <button class="btn" onclick="app.exportData()">Export Data as JSON</button>
+                        <button class="btn btn-danger" onclick="app.confirmResetData()">Reset All Data</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>About HKO Metaverse</h3>
+                    <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                        HKO Metaverse is a comprehensive project management system designed to track files, code snippets, duplicates, system architecture, and project progress. All data is stored in memory during your session.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add File Modal -->
+    <div id="add-file-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add File</h3>
+                <button class="modal-close" onclick="app.closeModal('add-file-modal')">&times;</button>
+            </div>
+            <form id="add-file-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Filename *</label>
+                        <input type="text" name="filename" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Folder *</label>
+                        <select name="folder" required>
+                            <option value="">Select folder</option>
+                            <option value="ESL">ESL</option>
+                            <option value="OUTPLACEMENT">OUTPLACEMENT</option>
+                            <option value="COACHING">COACHING</option>
+                            <option value="PERSONAL">PERSONAL</option>
+                            <option value="HKO">HKO</option>
+                            <option value="GOLDMINE">GOLDMINE</option>
+                            <option value="BT">BT</option>
+                            <option value="06_TOOLS_UTILITIES">06_TOOLS_UTILITIES</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>File Type *</label>
+                        <input type="text" name="type" placeholder="e.g., .pdf, .docx" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select name="status" required>
+                            <option value="">Select status</option>
+                            <option value="Draft">Draft</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Review">Review</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Add File</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Import Modal -->
+    <div id="bulk-import-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Bulk Import Files</h3>
+                <button class="modal-close" onclick="app.closeModal('bulk-import-modal')">&times;</button>
+            </div>
+            <form id="bulk-import-form">
+                <div class="form-group">
+                    <label>Select Folder to Import</label>
+                    <input type="file" name="files" webkitdirectory directory multiple>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Assign to Folder Category *</label>
+                        <select name="folder" required>
+                            <option value="">Select folder</option>
+                            <option value="ESL">ESL</option>
+                            <option value="OUTPLACEMENT">OUTPLACEMENT</option>
+                            <option value="COACHING">COACHING</option>
+                            <option value="PERSONAL">PERSONAL</option>
+                            <option value="HKO">HKO</option>
+                            <option value="GOLDMINE">GOLDMINE</option>
+                            <option value="BT">BT</option>
+                            <option value="06_TOOLS_UTILITIES">06_TOOLS_UTILITIES</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select name="status" required>
+                            <option value="">Select status</option>
+                            <option value="Draft">Draft</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Review">Review</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="checkbox-group" style="margin: 16px 0;">
+                    <input type="checkbox" id="include-subfolders" name="includeSubfolders">
+                    <label for="include-subfolders">Include subfolders</label>
+                </div>
+                <div id="import-result" class="alert alert-success hidden" style="margin-top: 16px;"></div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Import Files</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Code Modal -->
+    <div id="add-code-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Code Snippet</h3>
+                <button class="modal-close" onclick="app.closeModal('add-code-modal')">&times;</button>
+            </div>
+            <form id="add-code-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Title *</label>
+                        <input type="text" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Language *</label>
+                        <select name="language" required>
+                            <option value="">Select language</option>
+                            <option value="Python">Python</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="React">React</option>
+                            <option value="SQL">SQL</option>
+                            <option value="Bash">Bash</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>DNA Category *</label>
+                        <select name="dnaCategory" required>
+                            <option value="">Select category</option>
+                            <option value="file_ops">file_ops</option>
+                            <option value="text_ops">text_ops</option>
+                            <option value="ui_kit">ui_kit</option>
+                            <option value="exporters">exporters</option>
+                            <option value="routing">routing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Module Name *</label>
+                        <input type="text" name="module" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Code *</label>
+                    <textarea name="code" required></textarea>
+                </div>
+                <div class="checkbox-group" style="margin: 16px 0;">
+                    <input type="checkbox" id="production-ready" name="productionReady">
+                    <label for="production-ready">Production Ready</label>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Add Snippet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Duplicate Modal -->
+    <div id="add-duplicate-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Duplicate Entry</h3>
+                <button class="modal-close" onclick="app.closeModal('add-duplicate-modal')">&times;</button>
+            </div>
+            <form id="add-duplicate-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>File 1 *</label>
+                        <input type="text" name="file1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>File 2 *</label>
+                        <input type="text" name="file2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Size</label>
+                        <input type="text" name="size" placeholder="e.g., 2.5 MB">
+                    </div>
+                    <div class="form-group">
+                        <label>Priority *</label>
+                        <select name="priority" required>
+                            <option value="">Select priority</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Resolution Status *</label>
+                        <select name="resolution" required>
+                            <option value="">Select status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Ignored">Ignored</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Add Duplicate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Architecture Modal -->
+    <div id="add-architecture-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Architecture Component</h3>
+                <button class="modal-close" onclick="app.closeModal('add-architecture-modal')">&times;</button>
+            </div>
+            <form id="add-architecture-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Layer *</label>
+                        <select name="layer" required>
+                            <option value="">Select layer</option>
+                            <option value="CORE_ENGINE">CORE_ENGINE</option>
+                            <option value="DNA_LIBRARY">DNA_LIBRARY</option>
+                            <option value="PACKETS">PACKETS</option>
+                            <option value="FRAMES">FRAMES</option>
+                            <option value="MODULES">MODULES</option>
+                            <option value="LIBRARY">LIBRARY</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Component Name *</label>
+                        <input type="text" name="component" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select name="status" required>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Planned">Planned</option>
+                            <option value="In Development">In Development</option>
+                            <option value="Deprecated">Deprecated</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea name="description" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Add Component</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="add-project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Project</h3>
+                <button class="modal-close" onclick="app.closeModal('add-project-modal')">&times;</button>
+            </div>
+            <form id="add-project-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Project Name *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select name="category" required>
+                            <option value="">Select category</option>
+                            <option value="File Organization">File Organization</option>
+                            <option value="Code Refactor">Code Refactor</option>
+                            <option value="Documentation">Documentation</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Cleanup">Cleanup</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Items *</label>
+                        <input type="number" name="totalItems" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Completed Items *</label>
+                        <input type="number" name="completedItems" min="0" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority *</label>
+                        <select name="priority" required>
+                            <option value="">Select priority</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select name="status" required>
+                            <option value="">Select status</option>
+                            <option value="Active">Active</option>
+                            <option value="Paused">Paused</option>
+                            <option value="Completed">Completed</option>
+                            <option value="On Hold">On Hold</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Target Date</label>
+                        <input type="date" name="targetDate">
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Project Modal -->
+    <div id="update-project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Project Progress</h3>
+                <button class="modal-close" onclick="app.closeModal('update-project-modal')">&times;</button>
+            </div>
+            <form id="update-project-form">
+                <input type="hidden" name="projectId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Completed Items *</label>
+                        <input type="number" name="completedItems" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select name="status" required>
+                            <option value="Active">Active</option>
+                            <option value="Paused">Paused</option>
+                            <option value="Completed">Completed</option>
+                            <option value="On Hold">On Hold</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 16px;">Update Progress</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Code Modal -->
+    <div id="view-code-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Code Snippet</h3>
+                <button class="modal-close" onclick="app.closeModal('view-code-modal')">&times;</button>
+            </div>
+            <div id="code-details"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

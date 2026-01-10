@@ -1,0 +1,10 @@
+/venv/ 
+/service_account.json 
+/.env 
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Test files
+core/test_doc.txt
