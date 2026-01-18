@@ -1,35 +1,117 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shop — HKO Metaverse</title>
-  <link rel="stylesheet" href="assets/css/hko.css">
+  <meta name="description" content="Explore the modular catalog: training products, tools, and system components." />
+  <link rel="stylesheet" href="assets/css/hko.css" />
 </head>
 <body>
 
 <header>
-  <div class="container nav">
-    <div class="brand">
-      <div class="logo"></div>
-      <strong>HKO Metaverse</strong>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>HKO Metaverse</strong>
+          <span>Modular catalog</span>
+        </div>
+      </a>
+      <nav class="links">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill primary" href="shop.html">Shop</a>
+        <a class="pill" href="investors.html">Investors</a>
+      </nav>
     </div>
-    <nav>
-      <a class="pill" href="index.html">Home</a>
-      <a class="pill primary" href="shop.html">Shop</a>
-    </nav>
   </div>
 </header>
 
-<main class="container">
-  <h1>Modules</h1>
-  <p id="status">Loading…</p>
-  <div class="cards" id="grid"></div>
+<main>
+  <section class="hero">
+    <div class="container">
+
+      <div class="card">
+        <h1 style="margin:0 0 8px; font-size:36px; letter-spacing:-0.5px;">Modules</h1>
+        <p style="margin:0; color:var(--muted); line-height:1.6; max-width:80ch;">
+          This is the modular catalog layer: sellable units, tools, and templates with clear outcomes and upgrade paths.
+          (Early stage: content will expand and be organized into tiers.)
+        </p>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="cards">
+        <div class="card">
+          <h3 style="margin:0 0 8px;">HKO IaM (Native AI layer — TBD)</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            The behind-the-scenes layer intended to support structured workflows, safety scrubbing, and guided execution.
+            Scope and name are being finalized.
+          </p>
+          <div style="height:12px"></div>
+          <a class="btn" href="investors.html">Read the investor view</a>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">LayoutLab (Publishing & formatting)</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Layout and production tooling for structured content products (books, workbooks, modules), built for repeatability.
+          </p>
+          <div style="height:12px"></div>
+          <button class="btn">Coming soon</button>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">ESL Systems (CEFR-aligned)</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Structured learning paths and lesson modules aligned to CEFR progression, designed for consistent delivery.
+          </p>
+          <div style="height:12px"></div>
+          <button class="btn">Coming soon</button>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Outplacement Engine</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Modular career transition tooling: structured outputs, repeatable workflows, and upgradeable modules.
+          </p>
+          <div style="height:12px"></div>
+          <button class="btn">Coming soon</button>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Corporate training packs</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Ready-to-run training packs with clear objectives, facilitation guides, and quality standards.
+          </p>
+          <div style="height:12px"></div>
+          <button class="btn">Coming soon</button>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Templates & standards</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            The “quality layer”: checklists, evaluation loops, and packaging rules that keep the ecosystem consistent.
+          </p>
+          <div style="height:12px"></div>
+          <button class="btn">Coming soon</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
 </main>
 
-<footer class="footer container">
-  © HKO Metaverse
+<footer class="footer">
+  <div class="container">
+    © <span id="y"></span> HKO Metaverse
+  </div>
 </footer>
 
-<script src="assets/js/shop.js"></script>
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>

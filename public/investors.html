@@ -1,42 +1,145 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Investors — HKO Metaverse</title>
-  <link rel="stylesheet" href="assets/css/hko.css">
+  <meta name="description" content="Investor overview: positioning, why now, and the high-level roadmap." />
+  <link rel="stylesheet" href="assets/css/hko.css" />
 </head>
 <body>
 
 <header>
-  <div class="container nav">
-    <div class="brand">
-      <div class="logo"></div>
-      <strong>HKO Metaverse</strong>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>HKO Metaverse</strong>
+          <span>Investor overview</span>
+        </div>
+      </a>
+      <nav class="links">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="shop.html">Shop</a>
+        <a class="pill primary" href="investors.html">Investors</a>
+      </nav>
     </div>
-    <nav>
-      <a class="pill" href="index.html">Home</a>
-      <a class="pill" href="shop.html">Shop</a>
-    </nav>
   </div>
 </header>
 
-<main class="container">
-  <div class="card">
-    <h1>Why a native AI layer?</h1>
-    <p>
-      HKO Metaverse is built around modular, revenue-ready training products,
-      supported by a native AI layer (<strong>[To Be Discussed]</strong>)
-      designed for governance, cost control, and scale.
-    </p>
-    <p>
-      This is not a chatbot. It is an operational system.
-    </p>
-  </div>
+<main>
+  <section class="hero">
+    <div class="container">
+
+      <div class="card">
+        <h1 style="margin:0 0 10px; font-size:36px; letter-spacing:-0.5px;">
+          A modular training ecosystem with a scalable delivery layer.
+        </h1>
+
+        <p style="margin:0; color:var(--muted); line-height:1.6; max-width:90ch;">
+          HKO Metaverse focuses on turning expertise into modular products that can be shipped, upgraded, and delivered consistently.
+          The long-term direction includes a native AI layer (TBD) that supports quality control, safety scrubbing, and adaptive facilitation—
+          while keeping the system auditable and modular.
+        </p>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="cards">
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Positioning</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Not “just content.” Not “just a chatbot.” A modular product ecosystem with standards and a delivery layer—
+            designed to scale from solo operators to institutional rollout.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Why now</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Training demand is growing, but delivery quality collapses when systems scale.
+            HKO Metaverse is designed around consistency, upgrades, and repeatable packaging from day one.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px;">Moat direction</h3>
+          <p style="margin:0; color:var(--muted); line-height:1.6;">
+            Standards + evaluation loops + modular packaging now.
+            Native AI layer (TBD) later to accelerate iteration and maintain quality without compromising safety or privacy.
+          </p>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="card">
+        <h3 style="margin:0 0 10px;">Roadmap (high-level)</h3>
+
+        <div class="cards">
+          <div class="card" style="padding:14px;">
+            <strong>Phase 1 — Web layer + catalog</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Publish the modular catalog, establish the design system, and ship a clean investor-facing surface.
+            </div>
+          </div>
+
+          <div class="card" style="padding:14px;">
+            <strong>Phase 2 — Standards + tooling</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Build the packaging rules, evaluation loops, and module workflows that keep quality stable as content expands.
+            </div>
+          </div>
+
+          <div class="card" style="padding:14px;">
+            <strong>Phase 3 — Native AI layer (TBD)</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Add a native AI layer to support guided execution, safety scrubbing, and adaptive delivery—implemented with auditability and control.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+
+      <div class="card">
+        <h3 style="margin:0 0 10px;">What you can ask me in a meeting</h3>
+        <div class="cards">
+          <div class="card" style="padding:14px;">
+            <strong>What’s your wedge?</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Modular training products with standards and repeatable packaging—built to scale without quality collapse.
+            </div>
+          </div>
+          <div class="card" style="padding:14px;">
+            <strong>How do you expand?</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Add modules and tiers, then add tooling that increases throughput while enforcing quality.
+            </div>
+          </div>
+          <div class="card" style="padding:14px;">
+            <strong>Where does AI fit?</strong>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              AI is a later “assistive layer” for quality and execution—not the product itself.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 </main>
 
-<footer class="footer container">
-  © HKO Metaverse
+<footer class="footer">
+  <div class="container">
+    © <span id="y"></span> HKO Metaverse
+  </div>
 </footer>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
